@@ -18,9 +18,10 @@ return new class extends Migration
             $table->timestamp("started_at");
             $table->timestamp("finished_at")->nullable();
             $table->string("status",50);
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->softDeletes();
             $table->timestamps();
         });
-
     }
 
     /**
