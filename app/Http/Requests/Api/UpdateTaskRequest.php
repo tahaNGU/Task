@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use App\Enum\StatusTask;
+use App\RestFullApi\Facade\ApiResponse;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Contracts\Validation\Validator;
@@ -34,11 +35,7 @@ class UpdateTaskRequest extends FormRequest
         ];
     }
     protected function failedValidation(Validator $validator){
-        $response=response()->json([
-            'data'=>'',
-            'msg'=>$validator->errors()
-        ],Response::HTTP_UNPROCESSABLE_ENTITY);
-
-        throw new HttpResponseException($response);
+        $errors=ApiResponse::withData($validator->errors())->withMessage('Please Fill This Error')->withStatus(Response::HTTP_UNPROCESSABLE_ENTITY)->Builder();
+        throw new HttpResponseException($errors);
     }
 }

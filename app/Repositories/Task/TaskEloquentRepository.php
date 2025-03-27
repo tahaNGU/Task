@@ -11,8 +11,9 @@ class TaskEloquentRepository implements TaskRepositoryInterface
         return Task::create($data)->toArray();
     }
 
-    public function getWhere(array $where,int $nPage):array{
-        return Task::where($where)->paginate($nPage)->withQueryString()->toArray();
+    public function getWhere(array $where,int $nPage=20):mixed
+    {
+        return Task::where($where)->get();
     }
 
     public function updateWhere(array $data,array $where) :array
@@ -27,8 +28,8 @@ class TaskEloquentRepository implements TaskRepositoryInterface
         Task::where($where)->delete();
     }
 
-    public function firstWhere(array $where):array
+    public function getWhereFirst(array $where):array
     {
-        return Task::where($where)->first()->toArray();
+        return Task::where($where)->first()?->toArray() ?? [];
     }
 }

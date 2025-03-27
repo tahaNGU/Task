@@ -13,4 +13,7 @@ Route::prefix('user')->as('user.')->group(function(){
 Route::prefix('task/')->as('task.')->middleware('auth:sanctum')->group(function(){
     Route::post('',[TaskController::class,'create'])->name('create');
     Route::post('{id}',[TaskController::class,'update'])->name('update');
+    Route::get('{id}',[TaskController::class,'getTask']);
+    Route::get('',[TaskController::class,'getTasks']);
+
 });

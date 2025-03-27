@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Api;
+namespace App\Http\Resources\Api\Task;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserLoginResource extends JsonResource
+class TaskResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,7 +15,11 @@ class UserLoginResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'token'=>$this['token']
+            'title'=>$this['title'],
+            'note'=>$this['note'],
+            'status'=>$this['status'],
+            'finished_at'=>$this['finished_at'],
+            'created_at'=>$this['created_at']
         ];
     }
 }

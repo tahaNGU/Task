@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests\Api;
 
+use App\RestFullApi\Facade\ApiResponse;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserLoginRequest extends FormRequest
 {
@@ -25,5 +29,10 @@ class UserLoginRequest extends FormRequest
             'email' => ['required', 'email'],
             'password'=>['required','string','min:6','max:18'],
         ];
+    }
+
+    protected function failedValidation(Validator $validator){
+        $errors=ApiResponse::withData($validator->errors())->withMessage('Please Fill This Error')->withStatus(Response::HTTP_UNPROCESSABLE_ENTITY)->Builder();
+        throw new HttpResponseException($errors);
     }
 }

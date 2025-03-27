@@ -26,4 +26,18 @@ class TaskService
         $where['user_id']=$userId;
         return $this->taskRepositoryInterface->updateWhere($data,$where);
     }
+
+    public function getTask(int $userId,int $taskId){
+        $where["user_id"]=$userId;
+        $where["id"]=$taskId;
+        $task=$this->taskRepositoryInterface->getWhereFirst($where);
+        return $task;
+    }
+
+    public function getTasks(int $userId){
+        $where["user_id"]=$userId;
+        $tasks=$this->taskRepositoryInterface->getWhere($where);
+        return $tasks;
+    }
+
 }

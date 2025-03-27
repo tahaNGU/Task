@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
+use App\RestFullApi\Facade\ApiResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -33,11 +34,7 @@ class UserRegisterRequest extends FormRequest
     }
 
     protected function failedValidation(Validator $validator){
-        $response=response()->json([
-            'data'=>'',
-            'msg'=>$validator->errors()
-        ],Response::HTTP_UNPROCESSABLE_ENTITY);
-
-        throw new HttpResponseException($response);
+        $errors=ApiResponse::withData($validator->errors())->withMessage('Please Fill This Error')->withStatus(Response::HTTP_UNPROCESSABLE_ENTITY)->Builder();
+        throw new HttpResponseException($errors);
     }
 }
